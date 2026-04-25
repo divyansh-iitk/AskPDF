@@ -2,8 +2,9 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 from logger import logging
 from typing import List
+from utils.config import SplitterConfig
 
-def split_documents(documents: List[Document], chunk_size = 1000, chunk_overlap = 200) -> List[Document]:
+def split_documents(documents: List[Document], chunk_size = SplitterConfig.chunk_size, chunk_overlap = SplitterConfig.chunk_overlap) -> List[Document]:
     """Chunking
 
     Args:

@@ -1,12 +1,12 @@
 import numpy as np
 from sentence_transformers import SentenceTransformer
 from typing import List
-from utils.config import EMBEDDING_MODEL
+from utils.config import EmbeddingConfig
 from logger import logging
 
 
 class Embedding_manager:
-    def __init__(self, model_name: str = EMBEDDING_MODEL):
+    def __init__(self, model_name: str = EmbeddingConfig.embedding_model):
         self.model_name = model_name
         self.model = None
         self._load_model()
