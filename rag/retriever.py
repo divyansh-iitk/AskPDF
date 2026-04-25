@@ -10,7 +10,7 @@ class RAGRetriver:
         self.vector_store = vector_store
         self.embedding_manager = embedding_manager
         
-    def retriev(self, query: str, top_k = RetrieverConfig.top_k, score_threshold = RetrieverConfig.score_threshold) -> List[Dict[str, Any]]:
+    def retrieve(self, query: str, top_k = RetrieverConfig.top_k, score_threshold = RetrieverConfig.score_threshold) -> List[Dict[str, Any]]:
         """
         Retrieve relevant documents for a query
         

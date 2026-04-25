@@ -6,7 +6,8 @@ from logger import logging
 from utils.config import IngestConfig
 from typing import Tuple
 
-def ingest_pdfs(pdf_dir: str = IngestConfig.pdf_dir) -> Tuple[VectorStore, Embedding_manager]:
+
+def ingest_pdfs(pdf_dir: str = IngestConfig.pdf_dir) -> None:
     documents = process_all_pdfs(pdf_dir)
     chunks = split_documents(documents)
     texts = [doc.page_content for doc in chunks]
@@ -18,5 +19,4 @@ def ingest_pdfs(pdf_dir: str = IngestConfig.pdf_dir) -> Tuple[VectorStore, Embed
     vector_store.add_documents(documents=chunks, embeddings=embeddings)
 
     logging.info(f"PDFs ingested into vector DB")
-    return vector_store, embedding_manager
-
+    return None
