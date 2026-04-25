@@ -20,3 +20,7 @@ class VectorStoreConfig:
 class RetrieverConfig:
     top_k: int = 5
     score_threshold: float = 0.0
+    
+@dataclass
+class IngestConfig:
+    pdf_dir: str = "../data/pdfs"
