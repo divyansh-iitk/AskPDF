@@ -15,3 +15,8 @@ class EmbeddingConfig:
 class VectorStoreConfig:
     collection_name: str = "pdf_documents"
     persist_dir: str = "../db"
+    
+@dataclass
+class RetrieverConfig:
+    top_k: int = 5
+    score_threshold: float = 0.0
