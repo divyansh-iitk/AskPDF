@@ -3,6 +3,8 @@ from sentence_transformers import SentenceTransformer
 from typing import List
 from utils.config import EmbeddingConfig
 from logger import logging
+from langchain_community.retrievers import BM25Retriever
+from langchain_core.documents import Document
 
 
 class Embedding_manager:
@@ -16,7 +18,7 @@ class Embedding_manager:
             self.model = SentenceTransformer(self.model_name)
             logging.info(f"Embedding model loaded successfully. Embedding domensions = {self.model.get_embedding_dimension()}")
         except Exception as e:
-            logging.info(f"Error loading model {self.model_name}: {e}")
+            logging.error(f"Error loading model {self.model_name}: {e}")
             raise
     
     def create_embeddings(self, texts: List[str]) -> np.ndarray:
