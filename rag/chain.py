@@ -43,7 +43,7 @@ class GroqLLM:
                 )
 
     def _format_context(self, docs):
-        return "\n\n".join([doc["content"] for doc in docs])
+        return "\n\n".join([doc.page_content for doc in docs])
 
     def generate_response(self, query: str, retrieved_docs):
 

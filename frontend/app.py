@@ -108,7 +108,7 @@ if query:
 
             if response.status_code == 200:
                 data = response.json()
-                answer = data["answer"]
+                answer = data.get("answer")
                 sources = data.get("sources", [])
 
                 # Display answer
@@ -118,11 +118,13 @@ if query:
                 if sources:
                     with st.expander("📚 Sources"):
                         for i, src in enumerate(sources):
+                            score = src.get("score")
+                            score_text = f"{score:.2f}" if isinstance(score, (int, float)) else "N/A"
                             st.markdown(
                                 f"""
                                 <div class="source-box">
-                                <b>Source {i+1}</b> (Score: {src['score']:.2f})<br>
-                                {src['content'][:300]}...
+                                <b>Source {i+1}</b> (Score: {score_text})<br>
+                                {src.get('content')[:300]}...
                                 </div>
                                 """,
                                 unsafe_allow_html=True

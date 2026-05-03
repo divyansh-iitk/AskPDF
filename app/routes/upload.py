@@ -21,23 +21,27 @@ async def upload_pdf(request: Request, file: UploadFile = File(...)):
     file_path = os.path.join(UPLOAD_DIR, file.filename)
 
     try:
-        # Save file
-        if os.path.exists(file_path):
-            logging.info(f"File already exists at {file_path}, skipping save.")
-        else:
+        # Save file if needed
+        if not os.path.exists(file_path):
             with open(file_path, "wb") as f:
                 f.write(await file.read())
             logging.info(f"File saved at {file_path}")
+        else:
+            logging.info(f"File already exists at {file_path}, skipping save.")
+            flag = False
 
-            # Run ingestion
-            vector_store = request.app.state.vector_store
-            embedding_manager = request.app.state.embedding_manager
-            ingest_pdf(file_path, embedding_manager, vector_store)
+        # ALWAYS ingest
+        vector_store = request.app.state.vector_store
+        embedding_manager = request.app.state.embedding_manager
 
-            return {
-                "message": "PDF uploaded and processed successfully",
-                "filename": file.filename
-            }
+        request.app.state.bm25_retriever = ingest_pdf(
+            file_path, embedding_manager, vector_store,flag = flag
+        )
+
+        return {
+            "message": "PDF uploaded and processed successfully",
+            "filename": file.filename
+        }
 
     except Exception as e:
         logging.error(f"Upload error: {e}")

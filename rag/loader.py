@@ -1,4 +1,3 @@
-import os
 from langchain_core.documents import Document
 from langchain_community.document_loaders import PyMuPDFLoader
 from pathlib import Path

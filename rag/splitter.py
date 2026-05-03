@@ -3,6 +3,7 @@ from langchain_core.documents import Document
 from logger import logging
 from typing import List
 from utils.config import SplitterConfig
+import uuid
 
 def split_documents(documents: List[Document], chunk_size = SplitterConfig.chunk_size, chunk_overlap = SplitterConfig.chunk_overlap) -> List[Document]:
     """Chunking
@@ -24,6 +25,11 @@ def split_documents(documents: List[Document], chunk_size = SplitterConfig.chunk
     )
     try:
         splitted_docs = text_splitter.split_documents(documents)
+        
+        # Adding UUID to every chunk
+        for doc in splitted_docs:
+            uid = str(uuid.uuid4())
+            doc.metadata["uid"] = uid
         
     except Exception as e:
         logging.error(f"Error: {e}")
