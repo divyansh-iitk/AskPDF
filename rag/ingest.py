@@ -9,7 +9,7 @@ from logger import logging
 
 #---------------------#
 
-def ingest_pdf(pdf_file: str, embedding_manager: Embedding_manager = Embedding_manager(), vector_store: VectorStore = VectorStore(), flag: bool = True) -> BM25Retriever:
+def ingest_pdf(pdf_file: str, embedding_manager: Embedding_manager, vector_store: VectorStore, flag: bool = True) -> BM25Retriever:
     documents = process_pdf(pdf_file)
     chunks = split_documents(documents)
     BM25retriever = BM25_retriever(chunks)
