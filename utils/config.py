@@ -19,7 +19,7 @@ class VectorStoreConfig:
 @dataclass
 class RetrieverConfig:
     top_k: int = 10
-    score_threshold: float = 0.0
+    score_threshold: float = 0.5
     
 @dataclass
 class IngestConfig:
@@ -50,4 +50,9 @@ class LLM_GroqConfig:
     model_name = "llama-3.3-70b-versatile"
     temperature=0.1
     max_tokens=1024
+    
+    
+@dataclass
+class ChathistoryConfig:
+    last_n_chats = 3
     

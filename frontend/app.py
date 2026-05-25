@@ -118,7 +118,7 @@ if query:
                 if sources:
                     with st.expander("📚 Sources"):
                         for i, src in enumerate(sources):
-                            score = src.get("score")
+                            score = src.get("metadata").get("relevance_score")
                             score_text = f"{score:.2f}" if isinstance(score, (int, float)) else "N/A"
                             st.markdown(
                                 f"""

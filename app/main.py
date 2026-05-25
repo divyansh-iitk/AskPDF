@@ -14,6 +14,7 @@ async def lifespan(app: FastAPI):
         app.state.vector_store = VectorStore()
         app.state.embedding_manager = Embedding_manager()
         app.state.llm = GroqLLM()
+        app.state.chat_history = []
     except Exception as e:
         logging.error(f"Error while app startup: {e}")
         raise
