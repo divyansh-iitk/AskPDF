@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 
 from rag.embeddings import Embedding_manager
 from rag.vectorstore import VectorStore
-from rag.chain import GroqLLM
+from rag.llm import GroqLLM
 from app.routes import upload, query
 from logger import logging
 
