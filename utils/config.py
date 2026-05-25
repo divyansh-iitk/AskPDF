@@ -37,3 +37,17 @@ class EnsembleConfig:
     weigth_vector_retriever = 0.5
     weights = [weight_BM25, weigth_vector_retriever]
     id_key = "uid"
+    
+
+@dataclass
+class CohereConfig:
+    model_name = "rerank-v3.5"
+    top_n = 4
+    
+
+@dataclass
+class LLM_GroqConfig:
+    model_name = "llama-3.3-70b-versatile"
+    temperature=0.1
+    max_tokens=1024
+    

@@ -2,7 +2,11 @@ from fastapi import APIRouter, HTTPException, Request
 from app.schemas.query import QueryRequest
 from logger import logging
 from rag.retriever import RAGRetriver
-from rag.ensemble_retriever import ensemble_retriever
+from langchain_classic.retrievers.ensemble import EnsembleRetriever
+from rag.cohere_reranker import Cohere_Reranker
+from utils.config import EnsembleConfig
+from utils.config import CohereConfig
+
 
 router = APIRouter()
 
@@ -18,8 +22,21 @@ async def query_pdf(request: Request, body: QueryRequest):
         vector_store = request.app.state.vector_store
         embedding_manager = request.app.state.embedding_manager
         vector_retriever = RAGRetriver(vector_store=vector_store, embedding_manager=embedding_manager)
-        bm25_retriever = request.app.state.bm25_retriever        
-        retrieved_docs = ensemble_retriever(bm25_retriever, vector_retriever, body)
+        bm25_retriever = request.app.state.bm25_retriever
+        ensemble_retriever = EnsembleRetriever(
+
+            retrievers=[bm25_retriever, vector_retriever],
+
+            weights=EnsembleConfig.weights,
+            id_key=EnsembleConfig.id_key
+
+        )
+        
+        cohere_reranker = Cohere_Reranker(model_name=CohereConfig.model_name,
+                                          top_n=CohereConfig.top_n,
+                                          base_retriever=ensemble_retriever)
+           
+        retrieved_docs = cohere_reranker.rerank(query=body.question.lower().strip())
 
         if not retrieved_docs:
             return {
