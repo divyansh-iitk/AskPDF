@@ -221,3 +221,4 @@ __marimo__/
 .DS_Store
 data/*
 db/*
+backend/app_data/*
