@@ -31,9 +31,9 @@ jobs:
           ECR_REPOSITORY_FRONTEND: ${{ secrets.ECR_REPO_FRONTEND }}
           IMAGE_TAG: latest
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY_BACKEND:$IMAGE_TAG ./backend
+          docker build --pull -t $ECR_REGISTRY/$ECR_REPOSITORY_BACKEND:$IMAGE_TAG ./backend
           docker push $ECR_REGISTRY/$ECR_REPOSITORY_BACKEND:$IMAGE_TAG
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY_FRONTEND:$IMAGE_TAG ./frontend
+          docker build --pull -t $ECR_REGISTRY/$ECR_REPOSITORY_FRONTEND:$IMAGE_TAG ./frontend
           docker push $ECR_REGISTRY/$ECR_REPOSITORY_FRONTEND:$IMAGE_TAG
   
   Continuous-Deployment:
@@ -55,8 +55,8 @@ jobs:
       - name: Run Docker Image to serve users
         run: |
           docker network inspect app-network >/dev/null 2>&1 || docker network create app-network
-          docker pull ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPO_BACKEND }}:latest
-          docker pull ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPO_FRONTEND }}:latest
+          docker pull "${{ steps.login-ecr.outputs.registry }}"/"${{ secrets.ECR_REPO_BACKEND }}":latest
+          docker pull "${{ steps.login-ecr.outputs.registry }}"/"${{ secrets.ECR_REPO_FRONTEND }}":latest
           docker stop backend >/dev/null 2>&1 || true
           docker rm backend >/dev/null 2>&1 || true
           docker stop frontend >/dev/null 2>&1 || true
