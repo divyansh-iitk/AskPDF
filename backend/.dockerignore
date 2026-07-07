@@ -34,6 +34,4 @@ LICENSE
 README.md
 
 #Custom ignores
-data/
-db/
-logs/
+app_data/
