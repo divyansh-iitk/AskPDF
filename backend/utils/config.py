@@ -33,8 +33,8 @@ class BM25Config:
 
 @dataclass
 class EnsembleConfig:
-    weight_BM25 = 0.3
-    weigth_vector_retriever = 0.7
+    weight_BM25 = 0.5
+    weigth_vector_retriever = 0.5
     weights = [weight_BM25, weigth_vector_retriever]
     id_key = "uid"
     
